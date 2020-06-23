@@ -145,6 +145,8 @@ tests20.elf: \
 testxav.elf: \
 		src/clock.c.o \
 		src/gpio.c.o \
+		src/pwm.c.o \
+		src/servo.c.o \
 		main.c.o \
 		|
 	$(CC) $(CFlags) $^ $(LFlags) -o $@
