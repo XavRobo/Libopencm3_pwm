@@ -16,7 +16,7 @@
  *							The timers counter is counted up with the prescaled clock freq. With a freq. of 20kHz, the
  *							timer e.g. is increased every 1us.
  */
-void pwm_setup_timer(volatile uint32_t *reg, uint32_t en, uint32_t timer_peripheral, uint32_t prescaler, uint32_t period);
+void pwm_setup_timer(enum rcc_periph_clken 	clken, uint32_t timer_peripheral, uint32_t prescaler, uint32_t period);
 
 /**
  * Initialize a single ouput chanel for a timer. This function also intializes the GPIOs tight to the timers output channel.
@@ -28,7 +28,7 @@ void pwm_setup_timer(volatile uint32_t *reg, uint32_t en, uint32_t timer_periphe
  * @param[in]	gpio_port			The GPIO port to enable for the timer. E.g. GPIOA.
  * @param[in]	gpio_pin			The GPIO pin to enable for the timer. E.g. GPIO_TIM2_CH2.
  */
-void pwm_setup_output_channel(uint32_t timer_peripheral, enum tim_oc_id oc_id, volatile uint32_t *gpio_reg, uint32_t gpio_en, uint32_t gpio_port, uint16_t gpio_pin);
+void pwm_setup_output_channel(uint32_t timer_peripheral, enum tim_oc_id oc_id,enum rcc_periph_clken clken, uint32_t gpio_port, uint16_t gpio_pin);
 
 /**
  * Start the timer (and therefroe the PWM). Call this after {@link pwm_init_timer}.

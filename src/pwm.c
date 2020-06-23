@@ -3,10 +3,12 @@
 
 #include "include/pwm.h"
 
-void pwm_setup_timer(volatile uint32_t *reg, uint32_t en, uint32_t timer_peripheral, uint32_t prescaler, uint32_t period)
+void pwm_setup_timer(enum rcc_periph_clken 	clken, uint32_t timer_peripheral, uint32_t prescaler, uint32_t period)
 {
      /* Enable timer clock. */
-     rcc_peripheral_enable_clock(reg, en);
+     //rcc_peripheral_enable_clock(reg, en); version online
+     rcc_periph_clock_enable(clken);
+     
 
      /* Reset TIM1 peripheral */
      //timer_reset(timer_peripheral);
@@ -28,18 +30,20 @@ void pwm_setup_timer(volatile uint32_t *reg, uint32_t en, uint32_t timer_periphe
      timer_set_period(timer_peripheral, period);
 }
 
-void pwm_setup_output_channel(uint32_t timer_peripheral, enum tim_oc_id oc_id, volatile uint32_t *gpio_reg, uint32_t gpio_en, uint32_t gpio_port, uint16_t gpio_pin)
+void pwm_setup_output_channel(uint32_t timer_peripheral, enum tim_oc_id oc_id, enum rcc_periph_clken clken, uint32_t gpio_port, uint16_t gpio_pin)
 {
      /* Enable GPIO clock. */
-     rcc_peripheral_enable_clock(gpio_reg, gpio_en);
+     //rcc_peripheral_enable_clock(gpio_reg, gpio_en); version online
+     rcc_periph_clock_enable(clken);
 
      /* Set timer channel to output */
      gpio_mode_setup(gpio_port,GPIO_MODE_AF,GPIO_PUPD_NONE,gpio_pin);
      gpio_set_output_options(gpio_port, GPIO_OTYPE_PP,GPIO_OSPEED_50MHZ, gpio_pin);     
-	 gpio_set_af(gpio_port,GPIO_AF1,gpio_pin);
+	 gpio_set_af(gpio_port,GPIO_AF2,gpio_pin);
 
      timer_disable_oc_output(timer_peripheral, oc_id);
      timer_set_oc_mode(timer_peripheral, oc_id, TIM_OCM_PWM1);
+     timer_enable_oc_preload(timer_peripheral, oc_id);
      timer_set_oc_value(timer_peripheral, oc_id, 0);
      timer_enable_oc_output(timer_peripheral, oc_id);
 }

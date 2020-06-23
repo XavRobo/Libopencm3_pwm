@@ -17,15 +17,17 @@
  * TIM3 channel for servo 1.
  *
  * Changing this also requires to change settings in {@link servo_init}!
+ * TIM_OC2 avec GPIOA4
  */
-#define SERVO_A_TIMCH		TIM_OC1
+#define SERVO_A_TIMCH		TIM_OC2
 
 /**
  * TIM3 channel for servo 2.
  *
  * Changing this also requires to change settings in {@link servo_init}!
+ * TIM_OC1 avec GPIOA6
 */
-#define SERVO_B_TIMCH		TIM_OC2
+#define SERVO_B_TIMCH		TIM_OC1
 
 /**
  * Initialize and start the PWM used for the servos, drive servos to middle position.

@@ -9,13 +9,13 @@
 void servo_setup(void)
 {
      /* init timer3 with a period of 20ms */
-     pwm_setup_timer(&RCC_APB1ENR, RCC_APB1ENR_TIM3EN, TIM3, PWM_PRESCALE, PWM_PERIOD);
+     pwm_setup_timer(RCC_TIM3, TIM3, PWM_PRESCALE, PWM_PERIOD);
 
      /* init output of channel2 of timer3 */
-     pwm_setup_output_channel(TIM3, SERVO_A_TIMCH, &RCC_AHBENR, RCC_AHBENR_IOPAEN, GPIOA, GPIO6);
+     pwm_setup_output_channel(TIM3, SERVO_A_TIMCH,RCC_GPIOA, GPIOA, GPIO4);
 
      /* init output of channel3 of timer3 */
-     pwm_setup_output_channel(TIM3, SERVO_B_TIMCH, &RCC_AHBENR, RCC_AHBENR_IOPAEN, GPIOA, GPIO4);
+     pwm_setup_output_channel(TIM3, SERVO_B_TIMCH,RCC_GPIOA, GPIOA, GPIO6);
 
      pwm_set_pulse_width(TIM3, SERVO_A_TIMCH, 10000);
      pwm_set_pulse_width(TIM3, SERVO_B_TIMCH, 5000);
